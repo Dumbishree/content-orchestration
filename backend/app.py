@@ -378,8 +378,14 @@ def search_files():
         logger.error(f"Search error for user {current_user.email if 'current_user' in locals() else 'unknown'}: {str(e)}", exc_info=True)
         return jsonify(success=False, error='An unexpected server-side error occurred during search.'), 500
 
-
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify(status='ok'), 200
 # --- Main Entry Point ---
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+   app.run(
+    debug=False,
+    host='0.0.0.0',
+    port=int(os.environ.get('PORT', 8080))
+)
 
